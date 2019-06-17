@@ -6,11 +6,13 @@ const uid2 = require("uid2");
 const app = express();
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb://localhost/", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/url", { useNewUrlParser: true });
 
 const Address = mongoose.model("Address", {
   longUrl: {
-    type: String
+    type: String,
+    unique: true,
+    required: true
   },
   shortUrl: {
     type: String
@@ -21,6 +23,7 @@ const Address = mongoose.model("Address", {
 
 app.post("/create", async (req, res) => {
   try {
+    // condition 1, creation uniquement si addresse envoyée en paramètre
     if (req.body.url) {
       const newAddress = new Address({
         longUrl: req.body.url,
@@ -47,6 +50,6 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log("Server started");
 });
