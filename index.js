@@ -5,8 +5,8 @@ const uid2 = require("uid2");
 const cors = require("cors");
 
 const app = express();
-app.use(bodyParser.json());
 app.use(cors());
+app.use(bodyParser.json());
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/url", {
   useNewUrlParser: true
