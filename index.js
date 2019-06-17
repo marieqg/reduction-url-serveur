@@ -20,10 +20,14 @@ const Address = mongoose.model("Address", {
   },
   shortUrl: {
     type: String
+  },
+  counter: {
+    type: Number,
+    default: 0
   }
 });
 
-// Create
+// CREATE
 
 app.post("/create", async (req, res) => {
   try {
@@ -43,7 +47,7 @@ app.post("/create", async (req, res) => {
   }
 });
 
-// Read
+// READ
 
 app.get("/", async (req, res) => {
   try {
@@ -56,4 +60,26 @@ app.get("/", async (req, res) => {
 
 app.listen(process.env.PORT || 3001, () => {
   console.log("Server started");
+});
+
+// UPDATE
+
+app.post("/update", async (req, res) => {
+  try {
+    const address = await Address.findById(req.body.id);
+    if (address) {
+      if (req.body.url) {
+        neo.url = req.body.url;
+        res.json({ message: "Success!" });
+      }
+      if (req.body.counter) {
+        neo.counter = req.body.counter;
+        res.json({ message: "Success!" });
+      }
+    } else {
+      res.status(400).json({ message: "Missing parameter" });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
