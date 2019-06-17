@@ -6,7 +6,9 @@ const uid2 = require("uid2");
 const app = express();
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb://localhost/url", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/url", {
+  useNewUrlParser: true
+});
 
 const Address = mongoose.model("Address", {
   longUrl: {
@@ -50,6 +52,6 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log("Server started");
 });
