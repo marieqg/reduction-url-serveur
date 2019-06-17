@@ -35,15 +35,17 @@ app.post("/create", async (req, res) => {
     if (req.body.url) {
       const newAddress = new Address({
         longUrl: req.body.url,
-        shortUrl: uid2(5)
+        shortUrl: `http://https://short-url-marie-quittelier.herokuapp.com/${uid2(
+          5
+        )}`
       });
       await newAddress.save();
-      res.json({ message: "Success!" });
+      return res.json({ message: "Success!" });
     } else {
-      res.status(400).json({ message: "Missing parameter" });
+      return res.status(400).json({ message: "Missing parameter" });
     }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 
@@ -52,9 +54,27 @@ app.post("/create", async (req, res) => {
 app.get("/", async (req, res) => {
   try {
     const addresses = await Address.find();
-    res.json(addresses);
+    return res.json(addresses);
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+});
+
+// UPDATE
+
+app.post("/update", async (req, res) => {
+  try {
+    const address = await Address.findById(req.body.id);
+    if (address) {
+      if (req.body.counter) {
+        neo.counter = req.body.counter;
+        return res.json({ message: "Success!" });
+      }
+    } else {
+      return res.status(400).json({ message: "Missing parameter" });
+    }
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
   }
 });
 
