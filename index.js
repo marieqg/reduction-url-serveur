@@ -90,6 +90,7 @@ app.post("/update", async (req, res) => {
     if (address) {
       address.counter = address.counter + 1;
       res.json({ message: "Success!" });
+      await address.save();
     } else {
       res.status(400).json({ message: "Missing parameter" });
     }
