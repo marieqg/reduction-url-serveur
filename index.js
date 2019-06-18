@@ -31,12 +31,12 @@ const Address = mongoose.model("Address", {
 app.post("/create", async (req, res) => {
   try {
     // condition 1, creation uniquement si addresse envoyée en paramètre
+
     if (req.body.url) {
+      console.log("hello", req.body);
       const newAddress = new Address({
         longUrl: req.body.url,
-        shortUrl: `http://https://short-url-marie-quittelier.herokuapp.com/${uid2(
-          5
-        )}`,
+        shortUrl: `https://short-url-marie-quittelier.herokuapp.com/${uid2(5)}`,
         counter: 0
       });
       await newAddress.save();
