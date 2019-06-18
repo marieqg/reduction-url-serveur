@@ -22,8 +22,7 @@ const Address = mongoose.model("Address", {
     type: String
   },
   counter: {
-    type: Number,
-    default: 0
+    type: Number
   }
 });
 
@@ -37,7 +36,8 @@ app.post("/create", async (req, res) => {
         longUrl: req.body.url,
         shortUrl: `http://https://short-url-marie-quittelier.herokuapp.com/${uid2(
           5
-        )}`
+        )}`,
+        counter: 0
       });
       await newAddress.save();
       return res.json({ message: "Success!" });
@@ -75,4 +75,8 @@ app.post("/update", async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+});
+
+app.listen(process.env.PORT || 3001, () => {
+  console.log("Server started");
 });
