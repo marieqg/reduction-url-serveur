@@ -67,7 +67,7 @@ app.post("/update", async (req, res) => {
     const address = await Address.findById(req.body.id);
     if (address) {
       if (req.body.counter) {
-        neo.counter = req.body.counter;
+        address.counter = req.body.counter;
         return res.json({ message: "Success!" });
       }
     } else {
@@ -89,11 +89,11 @@ app.post("/update", async (req, res) => {
     const address = await Address.findById(req.body.id);
     if (address) {
       if (req.body.url) {
-        neo.url = req.body.url;
+        address.url = req.body.url;
         res.json({ message: "Success!" });
       }
       if (req.body.counter) {
-        neo.counter = req.body.counter;
+        address.counter = req.body.counter;
         res.json({ message: "Success!" });
       }
     } else {
