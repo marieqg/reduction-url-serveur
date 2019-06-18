@@ -88,14 +88,8 @@ app.post("/update", async (req, res) => {
   try {
     const address = await Address.findById(req.body.id);
     if (address) {
-      if (req.body.url) {
-        address.url = req.body.url;
-        res.json({ message: "Success!" });
-      }
-      if (req.body.counter) {
-        address.counter = req.body.counter;
-        res.json({ message: "Success!" });
-      }
+      address.counter = address.counter + 1;
+      res.json({ message: "Success!" });
     } else {
       res.status(400).json({ message: "Missing parameter" });
     }
