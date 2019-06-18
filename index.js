@@ -66,29 +66,7 @@ app.post("/update", async (req, res) => {
   try {
     const address = await Address.findById(req.body.id);
     if (address) {
-      if (req.body.counter) {
-        address.counter = req.body.counter;
-        return res.json({ message: "Success!" });
-      }
-    } else {
-      return res.status(400).json({ message: "Missing parameter" });
-    }
-  } catch (error) {
-    return res.status(400).json({ error: error.message });
-  }
-});
-
-app.listen(process.env.PORT || 3001, () => {
-  console.log("Server started");
-});
-
-// UPDATE
-
-app.post("/update", async (req, res) => {
-  try {
-    const address = await Address.findById(req.body.id);
-    if (address) {
-      address.counter = address.counter + 1;
+      address.counter += 1;
       res.json({ message: "Success!" });
       await address.save();
     } else {
