@@ -77,7 +77,9 @@ app.get("/:keyUrl", async (req, res) => {
       await address.save();
       return res.redirect(address.longUrl);
     } else {
-      return res.status(400).json({ message: "L'URL n'est pas valide" });
+      return res
+        .status(400)
+        .json({ error: { message: "L'URL n'est pas valide" } });
     }
   } catch (error) {
     return res.status(400).json({ error: { message: error.message } });
