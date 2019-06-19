@@ -52,7 +52,7 @@ app.post("/create", async (req, res) => {
       return res.status(400).json({ message: "Missing parameter" });
     }
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res.status(400).json({ message: "L'URL a déjà été utilisée" });
   }
 });
 
@@ -76,9 +76,11 @@ app.get("/:keyUrl", async (req, res) => {
       address.counter = address.counter + 1;
       await address.save();
       return res.redirect(address.longUrl);
+    } else {
+      return res.status(400).json({ error: { message: "L'URL n'existe pas" } });
     }
   } catch (error) {
-    res.status(400).json({ error: { message: error.message } });
+    return res.status(400).json({ error: { message: error.message } });
   }
 });
 
@@ -89,13 +91,13 @@ app.post("/update", async (req, res) => {
     const address = await Address.findById(req.body.id);
     if (address) {
       address.counter += 1;
-      res.json({ message: "Success!" });
       await address.save();
+      return res.json({ message: "Success!" });
     } else {
-      res.status(400).json({ message: "Missing parameter" });
+      return res.status(400).json({ message: "Missing parameter" });
     }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 
