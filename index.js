@@ -58,7 +58,7 @@ app.post("/create", async (req, res) => {
 
 // READ
 
-app.get("/", async (req, res) => {
+app.post("/", async (req, res) => {
   try {
     const addresses = await Address.find();
     return res.json(addresses);
