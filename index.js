@@ -78,7 +78,7 @@ app.get("/:keyUrl", async (req, res) => {
       return res.redirect(address.longUrl);
     }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: { message: error.message } });
   }
 });
 
