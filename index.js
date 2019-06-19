@@ -76,13 +76,11 @@ app.get("/:keyUrl", async (req, res) => {
       address.counter = address.counter + 1;
       await address.save();
       return res.redirect(address.longUrl);
-    } else {
-      return res
-        .status(400)
-        .redirect("http://short-url-marie-quittelier.herokuapp.com/");
     }
   } catch (error) {
-    return res.status(400).json({ error: { message: error.message } });
+    return res
+      .status(400)
+      .redirect("http://short-url-marie-quittelier.herokuapp.com/");
   }
 });
 
