@@ -33,7 +33,9 @@ app.post("/create", async (req, res) => {
     // condition 1, creation uniquement si addresse envoyée en paramètre
 
     if (req.body.url) {
-      console.log("hello", req.body);
+      for (let i = 0; i < req.body.length; i++) {
+        console.log("hello");
+      }
       const newAddress = new Address({
         longUrl: req.body.url,
         shortUrl: `https://short-url-marie-quittelier.herokuapp.com/${uid2(5)}`,
@@ -55,6 +57,21 @@ app.get("/", async (req, res) => {
   try {
     const addresses = await Address.find();
     return res.json(addresses);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// READ & REDIRECT
+
+app.post("/redirect", async (req, res) => {
+  try {
+    const address = await Address.findById(req.body.id);
+    if (address) {
+      address.counter = address.counter + 1;
+      await address.save();
+      return res.json(address);
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
