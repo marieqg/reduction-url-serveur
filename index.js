@@ -52,9 +52,7 @@ app.post("/create", async (req, res) => {
       return res.status(400).json({ message: "Missing parameter" });
     }
   } catch (error) {
-    return res
-      .status(400)
-      .json({ error: { message: "L'URL a déjà été utilisée" } });
+    return res.status(400).json({ error: { message: error } });
   }
 });
 
