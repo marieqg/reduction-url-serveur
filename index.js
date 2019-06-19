@@ -76,8 +76,6 @@ app.get("/:keyUrl", async (req, res) => {
       address.counter = address.counter + 1;
       await address.save();
       return res.redirect(address.longUrl);
-    } else {
-      return res.status(400).json({ error: { message: "L'URL n'existe pas" } });
     }
   } catch (error) {
     return res.status(400).json({ error: { message: error.message } });
