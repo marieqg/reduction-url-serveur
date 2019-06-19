@@ -58,7 +58,7 @@ app.post("/create", async (req, res) => {
 
 // READ
 
-app.post("/", async (req, res) => {
+app.get("/", async (req, res) => {
   try {
     const addresses = await Address.find();
     return res.json(addresses);
@@ -69,7 +69,7 @@ app.post("/", async (req, res) => {
 
 // READ & REDIRECT
 
-app.get("/:keyUrl", async (req, res) => {
+app.post("/:keyUrl", async (req, res) => {
   try {
     const address = await Address.findOne({ keyUrl: req.params.keyUrl });
     if (address) {
