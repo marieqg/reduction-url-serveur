@@ -69,7 +69,7 @@ app.get("/", async (req, res) => {
 
 // READ & REDIRECT
 
-app.post("/:keyUrl", async (req, res) => {
+app.get("/:keyUrl", async (req, res) => {
   try {
     const address = await Address.findOne({ keyUrl: req.params.keyUrl });
     if (address) {
