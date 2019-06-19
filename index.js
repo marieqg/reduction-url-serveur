@@ -42,7 +42,7 @@ app.post("/create", async (req, res) => {
       const randomStr = uid2(5);
       const newAddress = new Address({
         longUrl: req.body.url,
-        shortUrl: `https://short-url-marie-quittelier.herokuapp.com/${randomStr}`,
+        shortUrl: `http://short-url-marie-quittelier.herokuapp.com/${randomStr}`,
         counter: 0,
         keyUrl: randomStr
       });
