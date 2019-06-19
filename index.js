@@ -42,7 +42,7 @@ app.post("/create", async (req, res) => {
       const randomStr = uid2(5);
       const newAddress = new Address({
         longUrl: req.body.url,
-        shortUrl: `http://short-url-marie-quittelier.herokuapp.com/${randomStr}`,
+        shortUrl: `https://short-url-marie-quittelier.herokuapp.com/${randomStr}`,
         counter: 0,
         keyUrl: randomStr
       });
@@ -78,9 +78,7 @@ app.get("/:keyUrl", async (req, res) => {
       return res.redirect(address.longUrl);
     }
   } catch (error) {
-    return res
-      .status(400)
-      .redirect("http://short-url-marie-quittelier.herokuapp.com/");
+    return res.status(400).json({ error: { message: error.message } });
   }
 });
 
