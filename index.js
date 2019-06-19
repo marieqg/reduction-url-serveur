@@ -23,6 +23,9 @@ const Address = mongoose.model("Address", {
   },
   counter: {
     type: Number
+  },
+  keyUrl: {
+    type: String
   }
 });
 
@@ -36,10 +39,12 @@ app.post("/create", async (req, res) => {
       for (let i = 0; i < req.body.length; i++) {
         console.log("hello");
       }
+      const randomStr = uid2(5);
       const newAddress = new Address({
         longUrl: req.body.url,
-        shortUrl: `https://short-url-marie-quittelier.herokuapp.com/${uid2(5)}`,
-        counter: 0
+        shortUrl: `https://short-url-marie-quittelier.herokuapp.com/${randomStr}`,
+        counter: 0,
+        keyUrl: randomStr
       });
       await newAddress.save();
       return res.json({ message: "Success!" });
@@ -64,12 +69,13 @@ app.get("/", async (req, res) => {
 
 // READ & REDIRECT
 
-app.post("/redirect", async (req, res) => {
+app.get("/:keyUrl", async (req, res) => {
   try {
-    const address = await Address.findById(req.body.id);
+    const address = await Address.findOne({ keyUrl: req.body.keyUrl });
     if (address) {
       address.counter = address.counter + 1;
       await address.save();
+      res.redirect(address.longUrl);
       return res.json(address);
     }
   } catch (error) {
