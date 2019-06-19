@@ -75,8 +75,7 @@ app.get("/:keyUrl", async (req, res) => {
     if (address) {
       address.counter = address.counter + 1;
       await address.save();
-      res.redirect(address.longUrl);
-      return res.json(address);
+      return res.redirect(address.longUrl);
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
