@@ -77,9 +77,7 @@ app.get("/:keyUrl", async (req, res) => {
       await address.save();
       return res.redirect(address.longUrl);
     } else {
-      return res.redirect(
-        "http://short-url-marie-quittelier.herokuapp.com/error"
-      );
+      return res.status(400).json({ message: "L'URL n'est pas valide" });
     }
   } catch (error) {
     return res.status(400).json({ error: { message: error.message } });
