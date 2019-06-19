@@ -71,7 +71,7 @@ app.get("/", async (req, res) => {
 
 app.get("/:keyUrl", async (req, res) => {
   try {
-    const address = await Address.findOne(req.body.keyUrl);
+    const address = await Address.findOne({ keyUrl: req.params.keyUrl });
     if (address) {
       address.counter = address.counter + 1;
       await address.save();
